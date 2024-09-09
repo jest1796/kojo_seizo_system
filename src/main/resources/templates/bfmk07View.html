@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- タイトルのフォーマット -->
+    <title>B-FORME Java プロジェクト : 部署情報</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bfmk07View.css}">
+</head>
+<body>
+	
+	<form class="box" th:action="@{/b-forme_Kojo/pc/207}" method ="post" th:object="${departmentForm}">
+		<table class="dep_table" >
+			<tr>
+				<td class="table_border dep_name_width name_color text">[[#{i18n.affilicateId}]]</td>
+				<td colspan="3" class="table_border	value_color">
+					<input class="input_large" type="text" th:disabled="${isDisabled==true}" th:field="*{affilicateId}">
+				</td>
+			</tr>
+			<tr>
+				<td	class="table_border dep_name_width name_color text">[[#{i18n.affilicateName}]]</td>
+				<td colspan="3"class="table_border value_color">
+					<input class="input_large" type="text" th:disabled="${isDisabled==true}"th:field="*{affilicateName}">
+				</td>
+			</tr>
+			<tr>
+				<td class="table_border	dep_name_width name_color text">[[#{i18n.affilicateNameRya}]]</td>
+				<td colspan="3"class="table_border value_color">
+					<input class="input_large" type="text" th:disabled="${isDisabled==true}"th:field="*{affilicateNameR}">
+				</td>
+			</tr>
+			<tr>
+				<td class="table_border	dep_name_width name_color text">[[#{i18n.tekiyoubi}]]</td>
+				<td colspan="3"class="table_border value_color">
+					<input class="input_date" type="date" th:disabled="${isDisabled==true}" th:field="*{applyStrtDateStr}">
+							～
+					<input class="input_date" type="date" th:disabled="${isDisabled==true}" th:field="*{applyFinDateStr}">
+				</td>		
+			</tr>
+			<tr>
+				<td	class="flex">
+					<input type="text" readonly="readonly" th:if="${successFlg}" class="message" th:field="*{message}">
+					<input type="text" readonly="readonly" th:unless="${successFlg}" class="message" th:field="*{message}" style="color:red">
+					<input type="submit"  name = "back" class="button btn_return" th:value="#{i18n.modoru}">
+					<input type="submit" name = "clear" class="btn_active btn_clear" 
+						th:disabled="${isDisabled==true}"id="clear" th:value="#{i18n.kuria}">
+					<input type="submit" name = "register" class="btn_entry" 
+						th:disabled="${isDisabled==true}"id="register" th:value="#{i18n.toroku}">
+				</td>
+			</tr>
+		</table>
+
+		<div class="flex">
+			
+			<input type="submit" name = "delete"  class="btn_delete" id="delete"
+						th:disabled="${isDisabled==true}" th:value="#{i18n.sakujo}">
+						
+<!--			<script>-->
+<!--				const button =document.getElementById('delete');-->
+<!--				button.addEventListener('click', function(){-->
+<!--				confirm('削除してもよろしいでしょうか？');-->
+<!--				});-->
+<!--			</script>				-->
+			
+					
+			<ul class="pagination">
+			        <li class="user_info_btn"><button type="submit" name="hidari">[[#{i18n.hidari}]]</button></li>
+			        <li class=" user_info_btn"><button type="submit" name="saisho">[[#{i18n.saisho}]]</button></li>
+			        <li><span th:text="${ima}"></span>[[#{i18n.page}]]<span th:text="${allPages}"></span></li>
+			        <li class="user_info_btn"><button type="submit" name="saigo">[[#{i18n.saigo}]]</button></li>
+			        <li class="user_info_btn"><button type="submit" name="migi">[[#{i18n.migi}]]</button></li>
+			        <li>[[#{i18n.kensu}]]<span th:text="${kensu}"></span></li>
+			</ul>
+		</div>
+		
+		<table border="1" class="dep_info_table">
+			<thead>
+				<tr>
+					<th class="check_btn"></th>
+					<th class="dep_id">[[#{i18n.affilicateId}]]</th>
+					<th>[[#{i18n.syozoku}]]</th>
+					<th>[[#{i18n.syozokuRya}]]</th>
+					<th	class="dep_people">[[#{i18n.ninzu}]]</th>
+					<th	>[[#{i18n.kaisi}]]</th>
+					<th	>[[#{i18n.syuryo}]]</th>
+				</tr>
+			</thead>
+			 	<tbody>
+				<tr th:each = "bfmk07 : ${departmentList}">
+					<td><input type="checkbox" name="checkbox" th:value="${bfmk07.affilicateId}" 
+						th:disabled="${isDisabled==true}" th:checked="${bfmk07.checkbox.contains(bfmk07.affilicateId)}">
+					</td>
+					<td th:text="${bfmk07.affilicateId}"></td>
+					<td th:text="${bfmk07.affilicateName}"></td>
+					<td th:text="${bfmk07.affilicateNameR}"></td>
+					<td th:text="${bfmk07.affilicateCount}"></td>
+					<td th:text="${bfmk07.applyStrtDateStr}"></td>
+					<td th:text="${bfmk07.applyFinDateStr}"></td>
+				</tr>
+			
+				</tbody>
+		</table>				
+	</form>
+	 <script src="/js/bfmk07View.js"></script>
+</body>
+</html>
