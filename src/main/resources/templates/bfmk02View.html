@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- commons.htmlより<head>タグを読み込み -->
+<!-- 読み込むとこのHTML用の「bfmk01View.css」が読み込めないので、<head>タグを仮置き中 -->
+<!-- <head th:replace="commons :: base_header"> -->
+    <!-- <div th:include="commons :: base_header"></div> -->
+    <!-- <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bfmk01View.css}"> -->
+<!-- </head> -->
+
+<!-- 仮置きの<head>タグ -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- タイトルのフォーマット -->
+    <title>B-FORME Java プロジェクト : ユーザー情報一覧</title>
+    <!--/* 必ず読み込むファイル */-->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/common.css}" href="common.css">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bfmk02View.css}">
+</head>
+
+<body>
+    <!-- ヘッダー部の読み込み 
+    <div th:replace="commons :: header"></div>-->
+
+	<input type="hidden" th:id="authDiv" th:name="authDiv" th:value="${authDiv}"/>
+    <!-- ユーザー情報の登録 or 更新画面 -->
+    <form method ="post" th:object="${searchInfoForm}">
+
+        <table class="user_search_table">
+            <tr>
+                <td width="200px" class="table_border search_name_color">所属ID</td>
+                <td colspan="3" class="table_border search_value_color"><input type="text" th:field="*{affilicateId}"></td>
+            </tr>
+            <tr>
+                <td width="200px" class="table_border search_name_color">ユーザーID</td>
+                <td colspan="3" class="table_border search_value_color"><input type="text" th:field="*{userId}"></td>
+            </tr>
+            <tr>
+                <td width="200px" class="table_border search_name_color">ユーザー名</td>
+                <td colspan="3" class="table_border search_value_color"><input type="text" th:field="*{userName}"></td>
+            </tr>
+            <tr>
+                <td width="200px" class="table_border search_name_color">権限区分</td>
+                <td colspan="3" class="table_border search_value_color">
+                    <input type="checkbox" id="auth_div_guest"   name="auth_div" value=1 th:field="*{authDiv}">
+                    <label for="auth_div_guest"   class="auth_div_guest" >ゲスト</label>
+                    <input type="checkbox" id="auth_div_general" name="auth_div" value=2 th:field="*{authDiv}">
+                    <label for="auth_div_general" class="auth_div_general">一般</label>
+                    <input type="checkbox" id="auth_div_manager" name="auth_div" value=3 th:field="*{authDiv}">
+                    <label for="auth_div_manager" class="auth_div_manager">管理者</label>
+                </td>
+            </tr>
+            <tr>
+                <td width="200px" class="table_border search_name_color">有効日</td>
+                <td colspan="3" class="table_border search_value_color">
+                    <input type="date" th:field="*{expireDateFrom}">
+                        ～
+                    <input type="date" th:field="*{expireDateTo}">
+                </td>
+            </tr>
+            <tr>
+                <td width="200px">
+                    <button type="button" onclick="location.href='/b-forme_Kojo/pc/202/back'" class="btn_return_clear user_info_btn">戻る</button>
+                </td>
+                <td colspan="2">
+                    <!-- 「メッセージ」欄 -->
+                    <input type="text" id="message" class="message" th:if="${successFlg}" th:value="${message}" readonly="readonly">
+                    <input type="text" id="message" class="message" th:unless="${successFlg}" th:value="${message}" readonly="readonly" style="color: red;">
+                </td>
+                <td width="200px" align="right">
+                    <button type="submit" th:formaction="@{/b-forme_Kojo/pc/202/search}" id="search" class="btn_entry user_info_btn">検索</button>
+                    
+                    <button type="submit" th:formaction="@{/b-forme_Kojo/pc/202/clear}" id="clear" class="btn_entry user user_info_btn">クリア</button>
+                
+                </td>
+            </tr>
+        </table>
+	  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+	<div th:if="!${#lists.isEmpty(userList)}">
+  		<button type="submit" id="delete" class="btn_delete user_info_btn">削除</button>
+    	<input type="hidden" th:name="userList" th:value="${userList}"/>
+    	
+    <ul class="pagination">
+        <li class="border user_info_btn"><button type="submit" th:formaction="@{/b-forme_Kojo/pc/202/startPage}">←</button></li>
+        <li class="border user_info_btn"><button type="submit" th:formaction="@{/b-forme_Kojo/pc/202/prevPage}">⇤</button></li>
+        <li>[[${currentPage}]]/[[${page}]]</li>
+        <li class="border user_info_btn"><button type="submit" th:formaction="@{/b-forme_Kojo/pc/202/nextPage}">⇥</button></li>
+        <li class="border user_info_btn"><button type="submit" th:formaction="@{/b-forme_Kojo/pc/202/endPage}">→</button></li>
+        <li>件数:[[${userListSize}]]</li>
+    </ul>
+     <input type="hidden" th:name="currentPage" th:value="${currentPage}"/>
+
+    <table class="user_info_table" > 
+        <tr>
+            <td class="table_border search_name_color"></td>
+            <td class="table_border search_name_color">所属ID</td>
+            <td class="table_border search_name_color">所属名</td>
+            <td class="table_border search_name_color">ユーザーID</td>
+            <td class="table_border search_name_color">ユーザー名</td>
+            <td class="table_border search_name_color">権限区分</td>
+            <td class="table_border search_name_color">参照権限</td>
+            <td class="table_border search_name_color">操作権限</td>
+            <td class="table_border search_name_color">有効日(FROM)</td>
+            <td class="table_border search_name_color">有効日(TO)</td>
+            <td class="table_border search_name_color">パスワード</td>
+        </tr>
+        
+        <tr th:each="user, stat : ${userList}">
+            <td class="table_border search_name_color">
+                <input type="checkbox" th:name="deleteUser" th:value="${stat.index}">
+                <input type="hidden" th:name="affilicateIdList" th:value="${user.affilicateId}"/>
+                <input type="hidden" th:name="userIdList" th:value="${user.userId}"/>
+                <input type="hidden" th:name="facCdList" th:value="bfm1"/>
+            </td>
+            <td class="table_border search_name_color" th:text="${user.affilicateId}"></td>
+            <td class="table_border search_name_color" th:text="${user.affilicateName}"></td>
+            <td class="table_border search_name_color"><a th:href="@{/b-forme_Kojo/pc/202/link}" th:text="${user.userId}"></a></td>
+            <td class="table_border search_name_color" th:text="${user.userName}"></td>
+            <td class="table_border search_name_color" th:text="${user.authDivList[0]}"></td>
+            <td class="table_border search_name_color" th:text="有" th:if="${user.watchAuthFlg}"></td>
+            <td class="table_border search_name_color" th:text="無" th:if="!(${user.watchAuthFlg})"></td>
+            <td class="table_border search_name_color" th:text="有" th:if="${user.oprAuthFlg}"></td>
+            <td class="table_border search_name_color" th:text="無" th:if="!(${user.oprAuthFlg})"></td>
+            <td class="table_border search_name_color" th:text="${user.expireDateFrom}"></td>
+            <td class="table_border search_name_color" th:text="${user.expireDateTo}"></td>
+            <td class="table_border search_name_color" th:text="${user.pass}"></td>
+        </tr>
+                       
+    </table>
+
+	</div>
+	</form>
+    <!-- JQueryの読み込み -->
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <!-- JavaScriptの読み込み -->
+    <!-- <script th:src=@{/js/common.js} type="text/javascript"></script> -->
+    <!--/* 必ず読み込むファイル */-->
+    <script type="text/javascript" src="/js/bfmk02View.js"></script>
+</body>
+</html>

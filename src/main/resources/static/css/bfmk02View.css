@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+/* --------------------ユーザー情報登録/更新用テーブル-------------------- */
+/* ----------テーブル整形---------- */
+.user_search_table {
+    width: 1200px;
+}
+
+.table_border {
+    border: 1px #FF5050 solid;
+}
+/* ------------------------------- */
+
+/* -----検索項目名の背景色----- */
+.search_name_color {
+    background-color: #FFF0E6;
+}
+/* -------------------------- */
+
+/* -----検索項目値の背景色----- */
+.search_value_color {
+    background-color: #FFFAEB;
+}
+/* --------------------------  */
+
+/* ----------ユーザー名の注意書き---------- */
+.comments {
+    font-size: 12px;
+}
+/* -------------------------------------- */
+
+/* パスワード/パスワード再確認欄のテキストボックス */
+.pass {
+    width: 95%;
+}
+/* ------------------------------------------- */
+
+/* ----------「権限区分」チェックボックス位置調整---------- */
+.auth_div_guest, .auth_div_general, .auth_div_manager {
+    margin-right: 14px;
+}
+/* ------------------------------------------------- */
+
+/* ----------「権限」チェックボックス位置調整---------- */
+.auth_reference, .auth_operation {
+    margin-right: 30px;
+}
+/* --------------------------------------------- */
+
+/* ----------戻る/クリアボタン---------- */
+.btn_return_clear {
+    border: 1px solid #808080;
+    background-color: #D3D3D3;
+    padding: 0px;
+    margin-right: 5px;
+    text-align: center;
+    width:  40%;
+}
+/* ----------------------------------- */
+
+/* ----------メッセージ欄のテキストボックス---------- */
+.message {
+    width: 100%;
+}
+/* ----------------------------------------------- */
+
+/* ---------------登録ボタン--------------- */
+.btn_entry {
+    border: 1px solid #808080;
+    background-color: #D3D3D3;
+    padding: 0px;
+    text-align: center;
+    width: 40%;
+}
+/* --------------------------------------- */
+
+/* ---------------削除ボタン--------------- */
+.btn_delete {
+    border: 1px solid #808080;
+    background-color: #D3D3D3;
+    padding: 0px;
+    margin-left: 3px;
+    margin-top: 0px;
+    text-align: center;
+    width: 6.7%;
+}
+/* --------------------------------------- */
+
+/* -------------------------------------------------------------------- */
+
+/* ----------ボタン押下時にボタンを動かす---------- */
+.user_info_btn:active {
+    box-shadow: none;
+    position: relative;
+    top: 2px;
+}
+/* -------------------------------------- */
+
+
+/* ----------ページネーション---------- */
+.pagination  {
+	text-align: center;
+	margin-top: 0px;
+}
+
+.pagination li {
+	display:inline;
+	padding:3px 3px;
+}
+
+.user_info_table {
+	width: 1200px;
+	border-collapse:collapse;		/*セル同士の間に隙間を空けない*/
+	border: 1px #aaaaaa solid;
+	
+}
+
+.user_info_table td {
+	background: #f4f4fc;
+	border: 1px #aaaaaa solid;
+	border-right: none;
+	border-left: none;
+	
+}
+
+.user_info_table tr:nth-child(odd) td {
+	background: #fff;
+	border: 1px #aaaaaa solid;
+    border-right: none;
+	border-left: none;
+}
+
+.user_info_table tr:first-child td {
+    background: #e4e4e4;
+	border: 1px #aaaaaa solid;
+}
+
+.border {
+	border: 1px solid #808080;
+    background-color: #fff;
+}
+
+body {
+	background: #fffcec;
+}
